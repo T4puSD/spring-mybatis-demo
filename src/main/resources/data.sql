@@ -1,0 +1,1 @@
+INSERT INTO article(title, author) VALUES ('Working with batis in Spring', 'TapuSD');
