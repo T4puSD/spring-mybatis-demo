@@ -1,6 +1,7 @@
 package com.tapusd.springmybaties.mapper;
 
 import com.tapusd.springmybaties.domain.Article;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
@@ -24,4 +25,7 @@ public interface ArticleMapper {
 
     @Update("UPDATE article SET title = #{article.title}, author = #{article.author} WHERE id = #{id}")
     int update(@Param("id") Long id, Article article);
+
+    @Delete("DELETE FROM article WHERE id = #{id}")
+    int delete(@Param("id") Long id);
 }

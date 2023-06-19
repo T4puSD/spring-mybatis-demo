@@ -36,6 +36,12 @@ public class Response<T> {
         return this;
     }
 
+    public static Response<Object> getSuccessResponse() {
+        return new Response<Object>()
+                .setCode(HttpStatus.OK.value())
+                .setMessage("Success");
+    }
+
     public static <T> Response<T> getSuccessDataResponse(T data) {
         return new Response<T>()
                 .setCode(HttpStatus.OK.value())

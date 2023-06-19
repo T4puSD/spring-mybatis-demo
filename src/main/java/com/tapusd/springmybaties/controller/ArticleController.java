@@ -8,6 +8,7 @@ import com.tapusd.springmybaties.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,5 +58,11 @@ public class ArticleController {
     public ResponseEntity<Response<Article>> patchArticle(@PathVariable Long id, @RequestBody ArticleDTO dto) {
         var patchedArticle= articleService.patch(id, dto);
         return ResponseEntity.ok(Response.getSuccessDataResponse(patchedArticle));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Response<Object>> deleteArticle(@PathVariable Long id) {
+        articleService.delete(id);
+        return ResponseEntity.ok(Response.getSuccessResponse());
     }
 }

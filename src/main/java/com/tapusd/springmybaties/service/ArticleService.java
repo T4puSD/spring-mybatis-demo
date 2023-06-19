@@ -55,4 +55,12 @@ public class ArticleService {
 
         return article;
     }
+
+    public void delete(Long id) {
+        int deleteCount = articleMapper.delete(id);
+
+        if (deleteCount == 0) {
+            throw new NotFoundException("Article with provided id not found!");
+        }
+    }
 }
