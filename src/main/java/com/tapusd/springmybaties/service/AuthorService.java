@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -35,13 +36,22 @@ public class AuthorService {
         var author = new Author()
                 .setName(dto.name())
                 .setBio(dto.bio());
+        insert(author);
+        return author;
+    }
+
+
+    public void insert(Author author) {
+        Assert.hasText(author.getName(), "Author name can not be blank!");
 
         int insertCount = authorMapper.insert(author);
-
         if (insertCount == 0) {
             throw new DatabaseInsertException("Unable to insert Author!");
         }
-        return author;
+
+        if (Objects.isNull(author.getId())) {
+            throw new IllegalStateException("Mybatis failed to initialize author id!");
+        }
     }
 
     public Author patch(Long id, AuthorDTO dto) {

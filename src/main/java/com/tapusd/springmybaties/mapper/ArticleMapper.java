@@ -22,7 +22,7 @@ public interface ArticleMapper {
     @Insert(value = "INSERT INTO article (title, author_id) VALUES (#{title}, #{authorId})")
     // this will set the auto generated primary key from the database to the Article object
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-    void insert(Article article);
+    int insert(Article article);
 
     @Update("UPDATE article SET title = #{article.title}, author_id = #{article.authorId} WHERE id = #{id}")
     int update(@Param("id") Long id, Article article);

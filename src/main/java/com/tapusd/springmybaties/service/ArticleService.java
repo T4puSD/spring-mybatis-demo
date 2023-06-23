@@ -2,6 +2,7 @@ package com.tapusd.springmybaties.service;
 
 import com.tapusd.springmybaties.domain.Article;
 import com.tapusd.springmybaties.dto.request.ArticleDTO;
+import com.tapusd.springmybaties.exception.DatabaseInsertException;
 import com.tapusd.springmybaties.exception.NotFoundException;
 import com.tapusd.springmybaties.mapper.ArticleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -34,8 +36,23 @@ public class ArticleService {
                 .setTitle(dto.title())
                 .setAuthorId(dto.authorId());
 
-        articleMapper.insert(article);
+        insert(article);
         return article;
+    }
+
+    public void insert(Article article) {
+        Assert.hasText(article.getTitle(), "Title can not be blank!");
+        Assert.notNull(article.getAuthorId(), "Author id can not be null!");
+
+        int insertCount = articleMapper.insert(article);
+
+        if (insertCount == 0) {
+            throw new DatabaseInsertException("Unable to insert article!");
+        }
+
+        if (Objects.isNull(article.getId())) {
+            throw new IllegalStateException("Mybatis failed to initialize article id!");
+        }
     }
 
     public Article patch(Long id, ArticleDTO dto) {
