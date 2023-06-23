@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ArticleMapper {
 
@@ -16,7 +17,7 @@ public interface ArticleMapper {
     List<Article> getArticles();
 
     @Select("SELECT * FROM article where id = #{id}")
-    Article getArticle(@Param("id") Long id);
+    Optional<Article> getArticle(@Param("id") Long id);
 
     @Insert(value = "INSERT INTO article (title, author) VALUES (#{title}, #{author})")
     // this will set the auto generated primary key from the database to the Article object

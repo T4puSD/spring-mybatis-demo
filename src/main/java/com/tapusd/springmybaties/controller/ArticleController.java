@@ -40,10 +40,8 @@ public class ArticleController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Response<Article>> getArticleById(@PathVariable Long id) {
-        var article = articleService.getArticle(id);
-        if (Objects.isNull(article)) {
-            throw new NotFoundException("Article not found with provided id");
-        }
+        var article = articleService.getArticle(id)
+                .orElseThrow(() -> new NotFoundException("Article not found with provided id"));
         return ResponseEntity.ok(Response.getSuccessDataResponse(article));
     }
 

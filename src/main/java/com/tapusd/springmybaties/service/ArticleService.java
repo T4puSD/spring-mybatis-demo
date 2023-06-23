@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArticleService {
@@ -24,7 +25,7 @@ public class ArticleService {
         return articleMapper.getArticles();
     }
 
-    public Article getArticle(Long id) {
+    public Optional<Article> getArticle(Long id) {
         return articleMapper.getArticle(id);
     }
 
