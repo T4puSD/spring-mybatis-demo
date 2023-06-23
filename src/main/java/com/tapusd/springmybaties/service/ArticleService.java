@@ -32,7 +32,7 @@ public class ArticleService {
     public Article insert(ArticleDTO dto) {
         var article = new Article()
                 .setTitle(dto.title())
-                .setAuthor(dto.author());
+                .setAuthorId(dto.authorId());
 
         articleMapper.insert(article);
         return article;
@@ -41,12 +41,12 @@ public class ArticleService {
     public Article patch(Long id, ArticleDTO dto) {
         Assert.notNull(id, "Article id can not be null!");
         Assert.hasText(dto.title(), "Title can not be blank!");
-        Assert.hasText(dto.author(), "Author can not be blank!");
+        Assert.notNull(dto.authorId(), "Author id can not be null!");
 
         var article = new Article()
                 .setId(id)
                 .setTitle(dto.title())
-                .setAuthor(dto.author());
+                .setAuthorId(dto.authorId());
 
         int updateCount = articleMapper.update(id, article);
 

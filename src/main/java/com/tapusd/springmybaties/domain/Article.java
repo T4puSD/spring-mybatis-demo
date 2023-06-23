@@ -3,7 +3,7 @@ package com.tapusd.springmybaties.domain;
 public class Article {
     private Long id;
     private String title;
-    private String author;
+    private Long authorId;
 
     public Long getId() {
         return id;
@@ -23,12 +23,12 @@ public class Article {
         return this;
     }
 
-    public String getAuthor() {
-        return author;
+    public Long getAuthorId() {
+        return authorId;
     }
 
-    public Article setAuthor(String author) {
-        this.author = author;
+    public Article setAuthorId(Long authorId) {
+        this.authorId = authorId;
         return this;
     }
 }
