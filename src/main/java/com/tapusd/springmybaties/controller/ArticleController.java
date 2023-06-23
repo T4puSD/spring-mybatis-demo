@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/articles")
@@ -46,15 +44,18 @@ public class ArticleController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Response<Article>> save(@RequestBody ArticleDTO dto) {
         var article = articleService.insert(dto);
-        return ResponseEntity.ok(Response.getSuccessDataResponse(article));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new Response<Article>()
+                .setCode(HttpStatus.CREATED.value())
+                .setMessage("Created")
+                .setData(article)
+        );
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Response<Article>> patchArticle(@PathVariable Long id, @RequestBody ArticleDTO dto) {
-        var patchedArticle= articleService.patch(id, dto);
+        var patchedArticle = articleService.patch(id, dto);
         return ResponseEntity.ok(Response.getSuccessDataResponse(patchedArticle));
     }
 
